@@ -13,7 +13,7 @@ The plugin does not add a field. It teaches WooCommerce's own postcode field abo
 - **Tidies the code.** `ek 01 a03 fk 01` and `EK01A03FK01` are both stored as `EK-01-A03-FK-01`.
 - **Works with shipping zones.** Add a postcode rule such as `EK-01*` to a zone to price delivery for one LGA, or `EK-01-A03*` for one district. Write the prefix with its hyphens.
 
-A code with the right shape is not necessarily assigned to a building. Confirming that needs the NIPOST API, which is planned below.
+A code with the right shape is not necessarily assigned to a building. Only NIPOST knows that, which is what **Check orders** below is for.
 
 ## Find my postcode
 
@@ -25,9 +25,13 @@ To switch it on, go to **WooCommerce**, **Settings**, **General**, and enter a k
 
 The endpoint is public, because shoppers are not logged in. Three limits protect your NIPOST quota: a location outside Nigeria is refused without asking NIPOST, each visitor gets at most 5 calls a minute, and the store at most 600 an hour.
 
+## Check orders
+
+After each order with a Nigerian postcode, the plugin asks NIPOST whether that code belongs to a building and adds the answer as an order note: confirmed, no building found, or could not be checked. It runs in the background after the order is placed, so the customer never waits on NIPOST and a failure there cannot stop a sale. It uses the same key, and a level 1 lookup, which is free and returns no personal data. Switch it off under the same settings.
+
 ## What leaves your site
 
-Only "find my postcode" contacts another service. When a customer uses it, their latitude and longitude are sent to NIPOST's API at `api.postcode.gov.ng`, with your key, to find the nearest building. The plugin does not store or log the location, and it returns only the postcode and distance to the browser. See NIPOST's [privacy policy](https://postcode.gov.ng/privacy). Checking and tidying a typed postcode happens on your server and contacts nobody.
+Two features contact NIPOST's API at `api.postcode.gov.ng`, with your key, and only once you have entered one. When a customer presses "find my postcode", their latitude and longitude are sent to find the nearest building; the plugin does not store or log the location, and it returns only the postcode and distance to the browser. When orders are checked, the order's postcode is sent, and nothing else about the order or the customer. See NIPOST's [privacy policy](https://postcode.gov.ng/privacy). Checking and tidying a typed postcode happens on your server and contacts nobody.
 
 ## Requirements
 
@@ -36,10 +40,6 @@ WordPress 6.7, WooCommerce 10.0, and PHP 7.4, or later. It is tested on PHP 7.4 
 ## Install
 
 Download the zip from [Releases](https://github.com/Adeniyikayodee/ng-postcode-woocommerce/releases), then in WordPress go to **Plugins**, **Add New Plugin**, **Upload Plugin**. No settings are needed.
-
-## Planned
-
-- **Confirm after the order:** a free NIPOST lookup, recorded as an order note, that never blocks checkout.
 
 ## Development
 

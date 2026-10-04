@@ -9,7 +9,17 @@ if (isset($_GET['stub'])) {
 
 if (isset($_GET['order'])) {
     $order = wc_get_order((int) $_GET['order']);
-    echo wp_json_encode(['postcode' => $order->get_billing_postcode(), 'status' => $order->get_status()]);
+    $queued = as_has_scheduled_action('ng_postcode_verify_order', [$order->get_id()], 'ng-postcode');
+    // What the background queue would do on its next run.
+    ActionScheduler_QueueRunner::instance()->run();
+    $order = wc_get_order($order->get_id());
+    echo wp_json_encode([
+        'postcode' => $order->get_billing_postcode(),
+        'status' => $order->get_status(),
+        'queued' => $queued,
+        'checked' => $order->get_meta('_ng_postcode_status'),
+        'notes' => array_column(array_map('get_object_vars', wc_get_order_notes(['order_id' => $order->get_id()])), 'content'),
+    ]);
     exit;
 }
 

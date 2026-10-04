@@ -48,7 +48,7 @@ expect('validation', [true, false, false, true], [$probe['valid'], $probe['inval
 expect('a shipping zone matches on a prefix', 'Ado Ekiti', $probe['zone_in']);
 expect('and not on another LGA', false, $probe['zone_other_lga'] === 'Ado Ekiti');
 
-expect('the settings page has the key and the switch', ['ng_postcode_options', 'ng_postcode_api_key', 'ng_postcode_locate', 'ng_postcode_options'], $probe['settings']);
+expect('the settings page has the key and the switch', ['ng_postcode_options', 'ng_postcode_api_key', 'ng_postcode_locate', 'ng_postcode_verify', 'ng_postcode_options'], $probe['settings']);
 
 // The block checkout's server path.
 [, $session] = call("$base/?rest_route=/wc/store/v1/cart");
@@ -96,6 +96,14 @@ if (version_compare($probe['php'], '8.0', '<')) {
     $placed = $post('checkout', ['billing_address' => $billing('ek 01 a03 fk 01'), 'payment_method' => 'cod']);
     [$order] = call("$base/ng-probe.php?order=" . ($placed['order_id'] ?? 0));
     expect('a placed order holds the canonical code', 'EK-01-A03-FK-01', $order['postcode'] ?? null);
+    expect('the check with NIPOST waits in the background queue', true, $order['queued'] ?? null);
+    expect('an unassigned code is recorded on the order', 'unassigned', $order['checked'] ?? null);
+    expect('with a note for the merchant', true, in_array('NIPOST has no building for postcode EK-01-A03-FK-01. Check the address with the customer.', $order['notes'] ?? [], true));
+
+    $post('cart/add-item', ['id' => $store['product'], 'quantity' => 1]);
+    $placed = $post('checkout', ['billing_address' => $billing('FC-03-B06-AG-12'), 'payment_method' => 'cod']);
+    [$order] = call("$base/ng-probe.php?order=" . ($placed['order_id'] ?? 0));
+    expect('an assigned code is confirmed on the order', ['assigned', true], [$order['checked'] ?? null, in_array('NIPOST confirms postcode FC-03-B06-AG-12 belongs to a building.', $order['notes'] ?? [], true)]);
 }
 
 // What the checkout page tells the browser about the field.
