@@ -36,6 +36,29 @@ add_action('rest_api_init', static function (): void {
     ]);
 });
 
+// The button, on the checkout page only. Browsers give a location only over HTTPS.
+add_action('wp_enqueue_scripts', static function (): void {
+    if (!locate_enabled() || !function_exists('is_checkout') || !is_checkout()) {
+        return;
+    }
+    $plugin = dirname(__DIR__) . '/ng-postcode-for-woocommerce.php';
+    wp_enqueue_script('ng-postcode-locate', plugins_url('assets/locate.js', $plugin), [], (string) filemtime(dirname(__DIR__) . '/assets/locate.js'), true);
+    $config = [
+        'url' => rest_url('ng-postcode/v1/locate'),
+        'country' => WC()->countries->get_base_country(),
+        'text' => [
+            'button' => __('Find my postcode', 'ng-postcode-for-woocommerce'),
+            'locating' => __('Finding your location…', 'ng-postcode-for-woocommerce'),
+            /* translators: 1: a postcode, 2: a distance in metres */
+            'found' => __('Nearest building: %1$s, about %2$s m away. Check that it is yours.', 'ng-postcode-for-woocommerce'),
+            'none' => __('No postcode was found at your location. Type it if you know it.', 'ng-postcode-for-woocommerce'),
+            'denied' => __('Your location is not available. Type your postcode if you know it.', 'ng-postcode-for-woocommerce'),
+            'failed' => __('Something went wrong. Type your postcode if you know it.', 'ng-postcode-for-woocommerce'),
+        ],
+    ];
+    wp_add_inline_script('ng-postcode-locate', 'window.ngPostcodeLocate = ' . wp_json_encode($config) . ';', 'before');
+});
+
 /** @return array{found: bool, postcode?: string, distance_m?: ?float}|WP_Error */
 function locate(WP_REST_Request $request)
 {
