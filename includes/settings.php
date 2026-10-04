@@ -12,7 +12,7 @@ add_filter('woocommerce_general_settings', static function (array $settings): ar
         [
             'title' => __('Nigerian postcode', 'ng-postcode-for-woocommerce'),
             'type' => 'title',
-            'desc' => __('Checking a postcode needs no key. Finding one from a customer\'s location asks NIPOST, which needs a key from dashboard.postcode.gov.ng.', 'ng-postcode-for-woocommerce'),
+            'desc' => __('Checking a postcode\'s shape needs no key. Finding one from a customer\'s location, and confirming an order\'s postcode, ask NIPOST, which needs a key from dashboard.postcode.gov.ng.', 'ng-postcode-for-woocommerce'),
             'id' => 'ng_postcode_options',
         ],
         [
@@ -27,6 +27,13 @@ add_filter('woocommerce_general_settings', static function (array $settings): ar
             'title' => __('Find my postcode', 'ng-postcode-for-woocommerce'),
             'desc' => __('Let customers fill the postcode from their location at checkout', 'ng-postcode-for-woocommerce'),
             'id' => 'ng_postcode_locate',
+            'type' => 'checkbox',
+            'default' => 'yes',
+        ],
+        [
+            'title' => __('Check orders', 'ng-postcode-for-woocommerce'),
+            'desc' => __('After each order, ask NIPOST whether the postcode belongs to a building, and add the answer as an order note', 'ng-postcode-for-woocommerce'),
+            'id' => 'ng_postcode_verify',
             'type' => 'checkbox',
             'default' => 'yes',
         ],

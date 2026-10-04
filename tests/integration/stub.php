@@ -16,6 +16,12 @@ add_filter('pre_http_request', static function ($pre, array $args, string $url) 
         'timeout' => $args['timeout'],
     ];
     update_option('ng_stub_calls', $calls);
+    if ($calls[count($calls) - 1]['path'] === '/v1/lookup') {
+        // As the live API answers: this code is assigned, any other is not.
+        $valid = $query['code'] === 'FC-03-B06-AG-12';
+        $data = ['postcode' => $query['code'], 'valid' => $valid, 'status' => $valid ? 'valid' : 'not_found', 'verified' => false];
+        return ['response' => ['code' => 200, 'message' => 'OK'], 'body' => wp_json_encode(['data' => $data]), 'headers' => [], 'cookies' => []];
+    }
     $data = $query['lat'] === '9'
         ? ['found' => false, 'coordinate' => [3, 3], 'message' => 'no postcode within range of this location', 'radius_m' => 250]
         : ['found' => true, 'coordinate' => [5.2214, 7.6211], 'unit' => ['postcode' => 'EK-01-A29-KR-36', 'display' => 'EK 01 A29 KR 36', 'distance_m' => 15.7, 'confidence' => 'high'], 'area' => 'EK-01-A29-KR', 'district' => 'EK-01-A29', 'state' => 'EK', 'depth' => 'unit', 'radius_m' => 50];

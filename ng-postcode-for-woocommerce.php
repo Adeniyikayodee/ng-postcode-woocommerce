@@ -28,3 +28,4 @@ require_once __DIR__ . '/includes/checkout.php';
 require_once __DIR__ . '/includes/nipost.php';
 require_once __DIR__ . '/includes/settings.php';
 require_once __DIR__ . '/includes/locate.php';
+require_once __DIR__ . '/includes/verify.php';
