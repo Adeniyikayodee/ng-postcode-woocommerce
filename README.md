@@ -48,11 +48,16 @@ composer install && composer test      # the postcode core, against the shared s
 sh tests/integration/run.sh 7.4        # the plugin inside WordPress and WooCommerce
 npm ci && npx playwright install chromium
 sh tests/browser/run.sh                # a shopper in a real browser, in both checkouts
+sh tests/plugin-check/run.sh           # the release zip against WordPress.org's Plugin Check
 ```
 
-The last two need Node 24; they start a throwaway WordPress with [WordPress Playground](https://wordpress.github.io/wordpress-playground/), so no Docker or database is required.
+The last three need Node 24; they start a throwaway WordPress with [WordPress Playground](https://wordpress.github.io/wordpress-playground/), so no Docker or database is required.
 
 The postcode rules come from [ng-postcode](https://github.com/Adeniyikayodee/ng-postcode), which has the same behaviour in Rust, Python, JavaScript, and Java. `spec/` is a copy of its shared test cases: do not edit it here. `sh scripts/spec_sync.sh` proves the copy is untouched, and a weekly job reports when upstream has moved on.
+
+## Releasing
+
+Set the version in the plugin header and in `readme.txt`, merge, then push a `v*` tag. The release workflow builds the zip from the tag, runs every check against that zip, waits for a maintainer's approval, and attaches it to a GitHub release.
 
 ## License
 
