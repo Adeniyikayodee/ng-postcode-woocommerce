@@ -23,15 +23,18 @@ function verify_enabled(): bool
     return get_option('ng_postcode_verify', 'yes') === 'yes' && api_key() !== '';
 }
 
-$queue = static function ($order): void {
+// The classic checkout, then the block checkout.
+add_action('woocommerce_checkout_order_processed', __NAMESPACE__ . '\\queue_check');
+add_action('woocommerce_store_api_checkout_order_processed', __NAMESPACE__ . '\\queue_check');
+
+/** @param int|\WC_Order $order */
+function queue_check($order): void
+{
     $order = is_object($order) ? $order : wc_get_order($order);
     if ($order && verify_enabled() && order_postcode($order) !== null) {
         as_enqueue_async_action(VERIFY_ACTION, [$order->get_id()], 'ng-postcode');
     }
-};
-// The classic checkout, then the block checkout.
-add_action('woocommerce_checkout_order_processed', $queue);
-add_action('woocommerce_store_api_checkout_order_processed', $queue);
+}
 
 add_action(VERIFY_ACTION, static function ($order_id): void {
     $order = wc_get_order($order_id);

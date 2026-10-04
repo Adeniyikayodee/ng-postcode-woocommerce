@@ -71,7 +71,7 @@ function locate(WP_REST_Request $request)
     if (!is_finite($lat) || !is_finite($lng) || $lat < $south || $lat > $north || $lng < $west || $lng > $east) {
         return new WP_Error('outside_nigeria', __('That location is not in Nigeria.', 'ng-postcode-for-woocommerce'), ['status' => 400]);
     }
-    $visitor = 'ng_postcode_v_' . md5(wp_salt() . ($_SERVER['REMOTE_ADDR'] ?? ''));
+    $visitor = 'ng_postcode_v_' . md5(wp_salt() . sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'] ?? '')));
     if (!allowed($visitor, PER_VISITOR_A_MINUTE, MINUTE_IN_SECONDS) || !allowed('ng_postcode_store', PER_STORE_AN_HOUR, HOUR_IN_SECONDS)) {
         return new WP_Error('too_many_requests', __('Please wait a moment and try again.', 'ng-postcode-for-woocommerce'), ['status' => 429]);
     }
