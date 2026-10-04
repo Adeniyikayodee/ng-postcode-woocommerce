@@ -22,4 +22,6 @@ defined('ABSPATH') || exit;
 require_once __DIR__ . '/src/ParseError.php';
 require_once __DIR__ . '/src/Corrected.php';
 require_once __DIR__ . '/src/Postcode.php';
+require_once __DIR__ . '/src/ApiError.php';
+require_once __DIR__ . '/src/Api.php';
 require_once __DIR__ . '/includes/checkout.php';
