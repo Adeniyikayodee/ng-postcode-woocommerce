@@ -1,6 +1,6 @@
 {
     "name": "adeniyikayodee/ng-postcode-woocommerce",
-    "description": "Unofficial WooCommerce plugin for Nigeria's NIPOST digital postcode (NDAPS).",
+    "description": "WooCommerce plugin for Nigeria's NIPOST digital postcode (NDAPS).",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
     "require": {
