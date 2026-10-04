@@ -2,6 +2,11 @@
 // Runs inside a real WordPress with WooCommerce and prints what the plugin changed.
 require __DIR__ . '/wp-load.php';
 
+if (isset($_GET['stub'])) {
+    echo wp_json_encode(get_option('ng_stub_calls', []));
+    exit;
+}
+
 if (isset($_GET['order'])) {
     $order = wc_get_order((int) $_GET['order']);
     echo wp_json_encode(['postcode' => $order->get_billing_postcode(), 'status' => $order->get_status()]);
@@ -18,6 +23,7 @@ $to = static fn(string $postcode): array => ['destination' => ['country' => 'NG'
 echo wp_json_encode([
     // The site answers before the blueprint finishes, so callers wait for this.
     'plugin' => class_exists('NgPostcode\\Postcode'),
+    'settings' => array_column(apply_filters('woocommerce_general_settings', []), 'id'),
     'woocommerce' => WC()->version,
     'wordpress' => get_bloginfo('version'),
     'php' => PHP_VERSION,

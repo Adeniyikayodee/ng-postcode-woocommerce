@@ -25,3 +25,6 @@ require_once __DIR__ . '/src/Postcode.php';
 require_once __DIR__ . '/src/ApiError.php';
 require_once __DIR__ . '/src/Api.php';
 require_once __DIR__ . '/includes/checkout.php';
+require_once __DIR__ . '/includes/nipost.php';
+require_once __DIR__ . '/includes/settings.php';
+require_once __DIR__ . '/includes/locate.php';

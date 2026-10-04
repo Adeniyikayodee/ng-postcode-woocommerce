@@ -15,6 +15,18 @@ The plugin does not add a field. It teaches WooCommerce's own postcode field abo
 
 A code with the right shape is not necessarily assigned to a building. Confirming that needs the NIPOST API, which is planned below.
 
+## Find my postcode
+
+The plugin adds an endpoint, `POST /wp-json/ng-postcode/v1/locate`, that takes a latitude and longitude and returns the postcode of the nearest building and how far away it is. The checkout button that calls it is the next release.
+
+To switch it on, go to **WooCommerce**, **Settings**, **General**, and enter a key from the [NIPOST developer dashboard](https://dashboard.postcode.gov.ng) under **Nigerian postcode**. You can instead define `NG_POSTCODE_API_KEY` in `wp-config.php`, which keeps the key out of the database.
+
+The endpoint is public, because shoppers are not logged in. Three limits protect your NIPOST quota: a location outside Nigeria is refused without asking NIPOST, each visitor gets 5 calls a minute, and the store gets 600 an hour.
+
+## What leaves your site
+
+Only "find my postcode" contacts another service. When a customer uses it, their latitude and longitude are sent to NIPOST's API at `api.postcode.gov.ng`, with your key, to find the nearest building. The plugin does not store or log the location, and it returns only the postcode and distance to the browser. See NIPOST's [privacy policy](https://postcode.gov.ng/privacy). Checking and tidying a typed postcode happens on your server and contacts nobody.
+
 ## Requirements
 
 WordPress 6.7, WooCommerce 10.0, and PHP 7.4, or later. It is tested on PHP 7.4 to 8.5.
@@ -25,7 +37,7 @@ Download the zip from [Releases](https://github.com/Adeniyikayodee/ng-postcode-w
 
 ## Planned
 
-- **Find my postcode:** a button that fills the field from the customer's location.
+- **Find my postcode button:** fills the field at checkout from the customer's location.
 - **Confirm after the order:** a free NIPOST lookup, recorded as an order note, that never blocks checkout.
 
 ## Development
