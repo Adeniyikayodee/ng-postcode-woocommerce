@@ -87,14 +87,18 @@ function locate(WP_REST_Request $request)
     return ['found' => true, 'postcode' => (string) $code, 'distance_m' => $found['unit']['distance_m']];
 }
 
-/** Count one use in the current fixed window, and say whether it was within the limit. */
+/**
+ * Count one use, and say whether it was within the limit. Time is cut into windows
+ * of `$seconds`, and the previous window counts too, so a burst cannot double the
+ * limit by straddling a boundary.
+ */
 function allowed(string $name, int $limit, int $seconds): bool
 {
-    $key = $name . '_' . intdiv(time(), $seconds);
-    $used = (int) get_transient($key);
-    if ($used >= $limit) {
+    $window = intdiv(time(), $seconds);
+    $used = (int) get_transient("{$name}_{$window}");
+    if ($used + (int) get_transient($name . '_' . ($window - 1)) >= $limit) {
         return false;
     }
-    set_transient($key, $used + 1, $seconds);
+    set_transient("{$name}_{$window}", $used + 1, 2 * $seconds);
     return true;
 }
