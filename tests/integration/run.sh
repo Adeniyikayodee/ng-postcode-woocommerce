@@ -10,7 +10,8 @@ sed "s/\"steps\"/\"preferredVersions\": { \"php\": \"${1:-8.3}\", \"wp\": \"late
     tests/integration/blueprint.json > "$blueprint"
 npx -y @wp-playground/cli@latest server --port="$port" --verbosity=quiet --blueprint="$blueprint" \
     --mount "$PWD:/wordpress/wp-content/plugins/ng-postcode-for-woocommerce" \
-    --mount "$PWD/tests/integration/probe.php:/wordpress/ng-probe.php" >/dev/null 2>&1 &
+    --mount "$PWD/tests/integration/probe.php:/wordpress/ng-probe.php" \
+    --mount "$PWD/tests/integration/setup.php:/wordpress/ng-setup.php" >/dev/null 2>&1 &
 server=$!
 trap 'kill "$server" 2>/dev/null; rm -f "$blueprint"' EXIT
 tries=0
