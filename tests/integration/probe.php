@@ -17,6 +17,8 @@ if (isset($_GET['order'])) {
         ActionScheduler_QueueRunner::instance()->run();
         usleep(250000);
     }
+    // WooCommerce may have run the job in another request, so this request's cached order is stale.
+    wp_cache_flush();
     $order = wc_get_order($order->get_id());
     echo wp_json_encode([
         'postcode' => $order->get_billing_postcode(),
