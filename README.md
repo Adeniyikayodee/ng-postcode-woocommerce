@@ -23,7 +23,7 @@ Behind it is an endpoint, `POST /wp-json/ng-postcode/v1/locate`, that takes a la
 
 To switch it on, go to **WooCommerce**, **Settings**, **General**, and enter a key from the [NIPOST developer dashboard](https://dashboard.postcode.gov.ng) under **Nigerian postcode**. You can instead define `NG_POSTCODE_API_KEY` in `wp-config.php`, which keeps the key out of the database.
 
-The endpoint is public, because shoppers are not logged in. Three limits protect your NIPOST quota: a location outside Nigeria is refused without asking NIPOST, each visitor gets 5 calls a minute, and the store gets 600 an hour.
+The endpoint is public, because shoppers are not logged in. Three limits protect your NIPOST quota: a location outside Nigeria is refused without asking NIPOST, each visitor gets at most 5 calls a minute, and the store at most 600 an hour.
 
 ## What leaves your site
 
