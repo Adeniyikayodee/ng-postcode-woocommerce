@@ -9,9 +9,14 @@ if (isset($_GET['stub'])) {
 
 if (isset($_GET['order'])) {
     $order = wc_get_order((int) $_GET['order']);
-    $queued = as_has_scheduled_action('ng_postcode_verify_order', [$order->get_id()], 'ng-postcode');
-    // What the background queue would do on its next run.
-    ActionScheduler_QueueRunner::instance()->run();
+    $job = ['hook' => 'ng_postcode_verify_order', 'args' => [$order->get_id()], 'group' => 'ng-postcode'];
+    // Queued means the job exists in any state: WooCommerce may already be running it.
+    $queued = count(as_get_scheduled_actions($job, 'ids')) > 0;
+    // Run the queue, as the background would, until the job is no longer waiting or running.
+    for ($tries = 0; $tries < 40 && as_has_scheduled_action($job['hook'], $job['args'], $job['group']); $tries++) {
+        ActionScheduler_QueueRunner::instance()->run();
+        usleep(250000);
+    }
     $order = wc_get_order($order->get_id());
     echo wp_json_encode([
         'postcode' => $order->get_billing_postcode(),
