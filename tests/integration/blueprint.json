@@ -1,0 +1,6 @@
+{
+  "steps": [
+    { "step": "installPlugin", "pluginData": { "resource": "wordpress.org/plugins", "slug": "woocommerce" } },
+    { "step": "activatePlugin", "pluginPath": "ng-postcode-for-woocommerce/ng-postcode-for-woocommerce.php" }
+  ]
+}
