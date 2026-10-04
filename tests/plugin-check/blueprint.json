@@ -1,0 +1,8 @@
+{
+  "preferredVersions": { "php": "8.3", "wp": "latest" },
+  "steps": [
+    { "step": "installPlugin", "pluginData": { "resource": "wordpress.org/plugins", "slug": "woocommerce" } },
+    { "step": "installPlugin", "pluginData": { "resource": "wordpress.org/plugins", "slug": "plugin-check" } },
+    { "step": "activatePlugin", "pluginPath": "ng-postcode-for-woocommerce/ng-postcode-for-woocommerce.php" }
+  ]
+}
