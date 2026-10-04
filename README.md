@@ -9,7 +9,7 @@ The plugin does not add a field. It teaches WooCommerce's own postcode field abo
 ## What it does
 
 - **Shows the field.** WooCommerce hides the postcode for Nigerian addresses. The plugin shows it and keeps it optional, as most customers do not know their code yet.
-- **Checks the code.** A code with the wrong shape is refused at checkout, in both the classic and the block checkout. The check is offline and instant.
+- **Checks the code.** A code with the wrong shape is refused at checkout, in both the classic and the block checkout. The check is offline and instant. The block checkout also checks postcodes in the browser, where it still expects Nigeria's old six-digit code; the plugin corrects that, so a digital postcode is accepted there too.
 - **Tidies the code.** `ek 01 a03 fk 01` and `EK01A03FK01` are both stored as `EK-01-A03-FK-01`.
 - **Works with shipping zones.** Add a postcode rule such as `EK-01*` to a zone to price delivery for one LGA, or `EK-01-A03*` for one district. Write the prefix with its hyphens.
 
@@ -17,7 +17,9 @@ A code with the right shape is not necessarily assigned to a building. Confirmin
 
 ## Find my postcode
 
-The plugin adds an endpoint, `POST /wp-json/ng-postcode/v1/locate`, that takes a latitude and longitude and returns the postcode of the nearest building and how far away it is. The checkout button that calls it is the next release.
+Customers who do not know their code can press **Find my postcode** under the postcode field, in either checkout. The browser asks for their location, and the field is filled with the nearest building's code and a note such as "Nearest building: EK-01-A29-KR-36, about 16 m away. Check that it is yours." A phone's location can land on the building next door, so the customer confirms; nothing is submitted for them. Browsers share a location only on HTTPS sites.
+
+Behind it is an endpoint, `POST /wp-json/ng-postcode/v1/locate`, that takes a latitude and longitude and returns only the postcode and its distance.
 
 To switch it on, go to **WooCommerce**, **Settings**, **General**, and enter a key from the [NIPOST developer dashboard](https://dashboard.postcode.gov.ng) under **Nigerian postcode**. You can instead define `NG_POSTCODE_API_KEY` in `wp-config.php`, which keeps the key out of the database.
 
@@ -37,7 +39,6 @@ Download the zip from [Releases](https://github.com/Adeniyikayodee/ng-postcode-w
 
 ## Planned
 
-- **Find my postcode button:** fills the field at checkout from the customer's location.
 - **Confirm after the order:** a free NIPOST lookup, recorded as an order note, that never blocks checkout.
 
 ## Development
@@ -45,9 +46,11 @@ Download the zip from [Releases](https://github.com/Adeniyikayodee/ng-postcode-w
 ```sh
 composer install && composer test      # the postcode core, against the shared spec
 sh tests/integration/run.sh 7.4        # the plugin inside WordPress and WooCommerce
+npm ci && npx playwright install chromium
+sh tests/browser/run.sh                # a shopper in a real browser, in both checkouts
 ```
 
-The integration test needs Node 24; it starts a throwaway WordPress with [WordPress Playground](https://wordpress.github.io/wordpress-playground/), so no Docker or database is required.
+The last two need Node 24; they start a throwaway WordPress with [WordPress Playground](https://wordpress.github.io/wordpress-playground/), so no Docker or database is required.
 
 The postcode rules come from [ng-postcode](https://github.com/Adeniyikayodee/ng-postcode), which has the same behaviour in Rust, Python, JavaScript, and Java. `spec/` is a copy of its shared test cases: do not edit it here. `sh scripts/spec_sync.sh` proves the copy is untouched, and a weekly job reports when upstream has moved on.
 
