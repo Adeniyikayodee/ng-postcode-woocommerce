@@ -22,7 +22,7 @@ final class Api
     public static function lookup(Postcode $code, int $level = 1): array
     {
         if ($level < 1 || $level > 5) {
-            throw new InvalidArgumentException("level must be 1 to 5, got $level");
+            throw new InvalidArgumentException('level must be 1 to 5');
         }
         return ['path' => '/v1/lookup', 'query' => [['code', (string) $code], ['level', (string) $level]]];
     }
