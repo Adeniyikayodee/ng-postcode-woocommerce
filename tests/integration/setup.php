@@ -4,6 +4,7 @@ require __DIR__ . '/wp-load.php';
 
 update_option('woocommerce_default_country', 'NG:LA');
 update_option('woocommerce_currency', 'NGN');
+update_option('ng_postcode_api_key', 'test-key');
 update_option('woocommerce_cod_settings', ['enabled' => 'yes', 'title' => 'Pay on delivery']);
 
 $product = new WC_Product_Simple();

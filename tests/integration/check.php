@@ -48,6 +48,8 @@ expect('validation', [true, false, false, true], [$probe['valid'], $probe['inval
 expect('a shipping zone matches on a prefix', 'Ado Ekiti', $probe['zone_in']);
 expect('and not on another LGA', false, $probe['zone_other_lga'] === 'Ado Ekiti');
 
+expect('the settings page has the key and the switch', ['ng_postcode_options', 'ng_postcode_api_key', 'ng_postcode_locate', 'ng_postcode_options'], $probe['settings']);
+
 // The block checkout's server path.
 [, $session] = call("$base/?rest_route=/wc/store/v1/cart");
 $auth = ['Nonce: ' . $session['nonce'], 'Cart-Token: ' . $session['cart-token']];
@@ -59,8 +61,26 @@ expect('block checkout stores the canonical form', 'EK-01-A03-FK-01', $update('e
 expect('block checkout refuses a malformed code', 'rest_invalid_param', $update('EK-00-A03-FK-01')['code'] ?? null);
 expect('block checkout accepts no code at all', '', $update('')['shipping_address']['postcode'] ?? null);
 
-// A real order, paid on delivery.
+// Find my postcode. NIPOST is replaced by tests/integration/stub.php.
+$locate = static fn(float $lat, float $lng): array => call("$base/?rest_route=/ng-postcode/v1/locate", ['lat' => $lat, 'lng' => $lng])[0];
+$sent = static fn(): array => call("$base/ng-probe.php?stub=1")[0];
+expect('locate is off until the store has a key', 'not_configured', $locate(7.6211, 5.2214)['code'] ?? null);
+
 [$store] = call("$base/ng-setup.php");
+expect('locate returns the nearest building and its distance', ['found' => true, 'postcode' => 'EK-01-A29-KR-36', 'distance_m' => 15.7], $locate(7.6211, 5.2214));
+$call = $sent()[0] ?? [];
+expect('NIPOST is asked with the key, no redirects, and a timeout', ['/v1/search/reverse', 'test-key', 0, 10], [$call['path'] ?? null, $call['key'] ?? null, $call['redirection'] ?? null, $call['timeout'] ?? null]);
+expect('and with plain decimals', ['lat' => '7.6211', 'lng' => '5.2214', 'max_distance_m' => '50'], $call['query'] ?? null);
+expect('a point outside Nigeria is refused', 'outside_nigeria', $locate(51.5, -0.12)['code'] ?? null);
+expect('without asking NIPOST', 1, count($sent()));
+expect('nothing in range is an answer, not an error', ['found' => false], $locate(9.0, 7.0));
+$locate(7.6211, 5.2214);
+$locate(7.6211, 5.2214);
+$locate(7.6211, 5.2214);
+expect('a sixth call in a minute is refused', 'too_many_requests', $locate(7.6211, 5.2214)['code'] ?? null);
+expect('without asking NIPOST either', 5, count($sent()));
+
+// A real order, paid on delivery.
 $post = static fn(string $route, array $body): array => call("$base/?rest_route=/wc/store/v1/$route", $body, $auth)[0];
 $billing = static fn(string $postcode): array => [
     'first_name' => 'Ada', 'last_name' => 'Obi', 'email' => 'ada@example.com', 'phone' => '08000000000',
