@@ -46,3 +46,11 @@ add_filter('woocommerce_format_postcode', static function ($postcode, $country) 
     $code = Postcode::parse((string) $postcode);
     return $code instanceof Postcode ? (string) $code : $postcode;
 }, 10, 2);
+
+// See assets/block-checkout.js: the block checkout's browser-side check needs correcting too.
+add_action('wp_enqueue_scripts', static function (): void {
+    if (function_exists('is_checkout') && is_checkout() && has_block('woocommerce/checkout')) {
+        $plugin = dirname(__DIR__) . '/ng-postcode-for-woocommerce.php';
+        wp_enqueue_script('ng-postcode-block-checkout', plugins_url('assets/block-checkout.js', $plugin), ['wp-data'], (string) filemtime(dirname(__DIR__) . '/assets/block-checkout.js'), true);
+    }
+});
