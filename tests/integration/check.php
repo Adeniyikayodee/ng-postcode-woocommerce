@@ -59,4 +59,28 @@ expect('block checkout stores the canonical form', 'EK-01-A03-FK-01', $update('e
 expect('block checkout refuses a malformed code', 'rest_invalid_param', $update('EK-00-A03-FK-01')['code'] ?? null);
 expect('block checkout accepts no code at all', '', $update('')['shipping_address']['postcode'] ?? null);
 
+// A real order, paid on delivery.
+[$store] = call("$base/ng-setup.php");
+$post = static fn(string $route, array $body): array => call("$base/?rest_route=/wc/store/v1/$route", $body, $auth)[0];
+$billing = static fn(string $postcode): array => [
+    'first_name' => 'Ada', 'last_name' => 'Obi', 'email' => 'ada@example.com', 'phone' => '08000000000',
+    'country' => 'NG', 'state' => 'EK', 'city' => 'Ado Ekiti', 'address_1' => '1 NTA Road', 'postcode' => $postcode,
+];
+$post('cart/add-item', ['id' => $store['product'], 'quantity' => 1]);
+$refused = $post('checkout', ['billing_address' => $billing('EK-00-A03-FK-01'), 'payment_method' => 'cod']);
+expect('an order with a malformed code is refused', 'rest_invalid_param', $refused['code'] ?? null);
+if (version_compare($probe['php'], '8.0', '<')) {
+    // Playground's PHP 7.4 answers 500 to any WooCommerce checkout, with or without this plugin.
+    echo "skip a placed order holds the canonical code: this PHP cannot place orders in Playground\n";
+} else {
+    $placed = $post('checkout', ['billing_address' => $billing('ek 01 a03 fk 01'), 'payment_method' => 'cod']);
+    [$order] = call("$base/ng-probe.php?order=" . ($placed['order_id'] ?? 0));
+    expect('a placed order holds the canonical code', 'EK-01-A03-FK-01', $order['postcode'] ?? null);
+}
+
+// What the checkout page tells the browser about the field.
+$page = rawurldecode((string) file_get_contents($store['checkout']));
+$nigeria = substr($page, (int) strpos($page, '"NG":{"allowBilling"'), 4000);
+expect('the checkout page shows the field for Nigeria', 1, preg_match('/"locale":\{"postcode":\{[^}]*"hidden":false/', $nigeria));
+
 exit($failures === 0 ? 0 : 1);

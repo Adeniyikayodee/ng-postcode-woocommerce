@@ -2,6 +2,12 @@
 // Runs inside a real WordPress with WooCommerce and prints what the plugin changed.
 require __DIR__ . '/wp-load.php';
 
+if (isset($_GET['order'])) {
+    $order = wc_get_order((int) $_GET['order']);
+    echo wp_json_encode(['postcode' => $order->get_billing_postcode(), 'status' => $order->get_status()]);
+    exit;
+}
+
 $zone = new WC_Shipping_Zone();
 $zone->set_zone_name('Ado Ekiti');
 $zone->add_location('NG', 'country');
