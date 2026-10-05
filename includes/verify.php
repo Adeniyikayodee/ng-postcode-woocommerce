@@ -47,15 +47,15 @@ add_action(VERIFY_ACTION, static function ($order_id): void {
     if ($found instanceof ApiError) {
         $status = 'unconfirmed';
         /* translators: 1: a postcode, 2: an error code */
-        $note = sprintf(__('Postcode %1$s could not be checked with NIPOST (%2$s).', 'ng-postcode-for-woocommerce'), $code, $found->code);
+        $note = sprintf(__('Postcode %1$s could not be checked with NIPOST (%2$s).', 'adeniyikayode-nigerian-postcode-for-woocommerce'), $code, $found->code);
     } elseif ($found['valid']) {
         $status = 'assigned';
         /* translators: %s: a postcode */
-        $note = sprintf(__('NIPOST confirms postcode %s belongs to a building.', 'ng-postcode-for-woocommerce'), $code);
+        $note = sprintf(__('NIPOST confirms postcode %s belongs to a building.', 'adeniyikayode-nigerian-postcode-for-woocommerce'), $code);
     } else {
         $status = 'unassigned';
         /* translators: %s: a postcode */
-        $note = sprintf(__('NIPOST has no building for postcode %s. Check the address with the customer.', 'ng-postcode-for-woocommerce'), $code);
+        $note = sprintf(__('NIPOST has no building for postcode %s. Check the address with the customer.', 'adeniyikayode-nigerian-postcode-for-woocommerce'), $code);
     }
     $order->update_meta_data('_ng_postcode_status', $status);
     $order->add_order_note($note);

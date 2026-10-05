@@ -27,15 +27,15 @@ jobs:
       - name: Tag, plugin header and readme agree
         run: |
           version="${GITHUB_REF_NAME#v}"
-          grep -qx " \* Version: $version" ng-postcode-for-woocommerce.php
+          grep -qx " \* Version: $version" adeniyikayode-nigerian-postcode-for-woocommerce.php
           grep -qx "Stable tag: $version" readme.txt
       - run: composer install --no-progress
       - run: composer test
       - run: sh tests/plugin-check/run.sh
       - name: The zip itself works inside WooCommerce
         run: |
-          unzip -q ng-postcode-for-woocommerce.zip -d "$RUNNER_TEMP"
-          PLUGIN_DIR="$RUNNER_TEMP/ng-postcode-for-woocommerce" sh tests/integration/run.sh
-      - run: gh release create "$GITHUB_REF_NAME" ng-postcode-for-woocommerce.zip --title "$GITHUB_REF_NAME" --generate-notes
+          unzip -q adeniyikayode-nigerian-postcode-for-woocommerce.zip -d "$RUNNER_TEMP"
+          PLUGIN_DIR="$RUNNER_TEMP/adeniyikayode-nigerian-postcode-for-woocommerce" sh tests/integration/run.sh
+      - run: gh release create "$GITHUB_REF_NAME" adeniyikayode-nigerian-postcode-for-woocommerce.zip --title "$GITHUB_REF_NAME" --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}

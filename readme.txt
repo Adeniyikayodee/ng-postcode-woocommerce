@@ -1,4 +1,4 @@
-=== NG Postcode for WooCommerce ===
+=== Adeniyikayode Nigerian Postcode for WooCommerce ===
 Contributors: adeniyikayode
 Tags: woocommerce, nigeria, postcode, checkout, shipping
 Requires at least: 6.7

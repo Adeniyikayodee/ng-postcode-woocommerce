@@ -1,4 +1,4 @@
-# NG Postcode for WooCommerce
+# Adeniyikayode Nigerian Postcode for WooCommerce
 
 [![CI](https://github.com/Adeniyikayodee/ng-postcode-woocommerce/actions/workflows/ci.yml/badge.svg)](https://github.com/Adeniyikayodee/ng-postcode-woocommerce/actions/workflows/ci.yml)
 

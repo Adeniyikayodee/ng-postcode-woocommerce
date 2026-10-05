@@ -8,7 +8,7 @@ port=9422
 unzip -q "$(sh scripts/build_zip.sh)" -d "$work"
 npx -y @wp-playground/cli@latest server --port="$port" --verbosity=quiet \
     --blueprint=tests/plugin-check/blueprint.json \
-    --mount "$work/ng-postcode-for-woocommerce:/wordpress/wp-content/plugins/ng-postcode-for-woocommerce" \
+    --mount "$work/adeniyikayode-nigerian-postcode-for-woocommerce:/wordpress/wp-content/plugins/adeniyikayode-nigerian-postcode-for-woocommerce" \
     --mount "$PWD/tests/plugin-check/check.php:/wordpress/ng-plugin-check.php" >/dev/null 2>&1 &
 server=$!
 # npx leaves its server running when it is killed, so stop that by its port as well.
