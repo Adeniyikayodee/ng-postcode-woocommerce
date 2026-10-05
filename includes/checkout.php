@@ -18,7 +18,7 @@ const COUNTRY = 'NG';
 
 add_action('before_woocommerce_init', static function (): void {
     if (class_exists(FeaturesUtil::class)) {
-        $plugin = dirname(__DIR__) . '/ng-postcode-for-woocommerce.php';
+        $plugin = dirname(__DIR__) . '/adeniyikayode-nigerian-postcode-for-woocommerce.php';
         FeaturesUtil::declare_compatibility('custom_order_tables', $plugin);
         FeaturesUtil::declare_compatibility('cart_checkout_blocks', $plugin);
     }
@@ -50,7 +50,7 @@ add_filter('woocommerce_format_postcode', static function ($postcode, $country) 
 // See assets/block-checkout.js: the block checkout's browser-side check needs correcting too.
 add_action('wp_enqueue_scripts', static function (): void {
     if (function_exists('is_checkout') && is_checkout() && has_block('woocommerce/checkout')) {
-        $plugin = dirname(__DIR__) . '/ng-postcode-for-woocommerce.php';
+        $plugin = dirname(__DIR__) . '/adeniyikayode-nigerian-postcode-for-woocommerce.php';
         wp_enqueue_script('ng-postcode-block-checkout', plugins_url('assets/block-checkout.js', $plugin), ['wp-data'], (string) filemtime(dirname(__DIR__) . '/assets/block-checkout.js'), true);
     }
 });

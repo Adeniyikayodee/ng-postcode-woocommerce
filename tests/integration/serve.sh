@@ -10,7 +10,7 @@ sed "s/\"steps\"/\"preferredVersions\": { \"php\": \"${1:-8.3}\", \"wp\": \"late
     tests/integration/blueprint.json > "$blueprint"
 # exec, so that stopping this script stops the server.
 exec npx -y @wp-playground/cli@latest server --port="${2:-9412}" --verbosity=quiet --blueprint="$blueprint" \
-    --mount "${PLUGIN_DIR:-$PWD}:/wordpress/wp-content/plugins/ng-postcode-for-woocommerce" \
+    --mount "${PLUGIN_DIR:-$PWD}:/wordpress/wp-content/plugins/adeniyikayode-nigerian-postcode-for-woocommerce" \
     --mount "$PWD/tests/integration/probe.php:/wordpress/ng-probe.php" \
     --mount "$PWD/tests/integration/setup.php:/wordpress/ng-setup.php" \
     --mount "$PWD/tests/integration/stub.php:/wordpress/wp-content/mu-plugins/ng-stub.php"

@@ -7,7 +7,7 @@ use WordPress\Plugin_Check\Checker\Check_Repository;
 use WordPress\Plugin_Check\Checker\Check_Result;
 use WordPress\Plugin_Check\Checker\Default_Check_Repository;
 
-$plugin = WP_PLUGIN_DIR . '/ng-postcode-for-woocommerce/ng-postcode-for-woocommerce.php';
+$plugin = WP_PLUGIN_DIR . '/adeniyikayode-nigerian-postcode-for-woocommerce/adeniyikayode-nigerian-postcode-for-woocommerce.php';
 $result = new Check_Result(new Check_Context($plugin));
 $checks = (new Default_Check_Repository())->get_checks(Check_Repository::TYPE_STATIC)->to_map();
 foreach ($checks as $check) {

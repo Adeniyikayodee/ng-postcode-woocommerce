@@ -3,6 +3,6 @@
   "steps": [
     { "step": "installPlugin", "pluginData": { "resource": "wordpress.org/plugins", "slug": "woocommerce" } },
     { "step": "installPlugin", "pluginData": { "resource": "wordpress.org/plugins", "slug": "plugin-check" } },
-    { "step": "activatePlugin", "pluginPath": "ng-postcode-for-woocommerce/ng-postcode-for-woocommerce.php" }
+    { "step": "activatePlugin", "pluginPath": "adeniyikayode-nigerian-postcode-for-woocommerce/adeniyikayode-nigerian-postcode-for-woocommerce.php" }
   ]
 }

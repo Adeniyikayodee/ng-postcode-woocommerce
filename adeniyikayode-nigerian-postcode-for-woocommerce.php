@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: NG Postcode for WooCommerce
+ * Plugin Name: Adeniyikayode Nigerian Postcode for WooCommerce
  * Plugin URI: https://github.com/Adeniyikayodee/ng-postcode-woocommerce
  * Description: Nigeria's NIPOST digital postcode at checkout: checked, tidied, and usable in shipping zones.
  * Version: 0.1.0
@@ -12,7 +12,7 @@
  * Author: Kayode Adeniyi
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: ng-postcode-for-woocommerce
+ * Text Domain: adeniyikayode-nigerian-postcode-for-woocommerce
  */
 
 declare(strict_types=1);
