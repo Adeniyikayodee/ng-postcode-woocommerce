@@ -5,7 +5,7 @@ Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
 Requires Plugins: woocommerce
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,9 @@ It is stored on your server and used only there. You can instead define `NG_POST
 "Find my postcode" refuses locations outside Nigeria without asking NIPOST, allows each visitor at most 5 searches a minute, and allows the store at most 600 an hour.
 
 == Changelog ==
+
+= 0.1.1 =
+* Renamed to Adeniyikayode Nigerian Postcode for WooCommerce.
 
 = 0.1.0 =
 * First release.
