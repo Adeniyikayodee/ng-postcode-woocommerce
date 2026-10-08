@@ -1,6 +1,6 @@
 === Adeniyikayode Nigerian Postcode for WooCommerce ===
 Contributors: adeniyikayode
-Tags: woocommerce, nigeria, postcode, checkout, shipping
+Tags: woocommerce, nigeria, postcode, postal code, zip code
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
@@ -13,7 +13,7 @@ Nigeria's NIPOST digital postcode at checkout: checked, tidied, found from the c
 
 == Description ==
 
-Nigeria's National Digital Alphanumeric Postcode System (NDAPS) gives every building an 11-character code such as `EK-01-A03-FK-01`: state, LGA, district, area, and building unit.
+Nigeria's National Digital Alphanumeric Postcode System (NDAPS) gives every building an 11-character code such as `EK-01-A03-FK-01`: state, LGA, district, area, and building unit. It is Nigeria's new postal code, or zip code.
 
 This plugin does not add a field. It teaches WooCommerce's own postcode field about Nigerian codes, so the postcode reaches everything that already reads that field: orders, emails, exports, the REST API, couriers, and shipping zones.
 
