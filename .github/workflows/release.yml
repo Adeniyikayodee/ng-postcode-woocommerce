@@ -1,7 +1,8 @@
 name: Release
 
 # Push a tag such as v0.1.0. The zip is built from the tag, checked, installed in a
-# real store and tested, and only then attached to a GitHub release.
+# real store and tested, and only then attached to a GitHub release and published
+# to WordPress.org.
 on:
   push:
     tags: ["v*"]
@@ -39,3 +40,7 @@ jobs:
       - run: gh release create "$GITHUB_REF_NAME" adeniyikayode-nigerian-postcode-for-woocommerce.zip --title "$GITHUB_REF_NAME" --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
+      - run: sudo apt-get install -y --no-install-recommends subversion
+      - run: sh scripts/svn_deploy.sh "${GITHUB_REF_NAME#v}"
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}

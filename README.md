@@ -57,7 +57,7 @@ The postcode rules come from [ng-postcode](https://github.com/Adeniyikayodee/ng-
 
 ## Releasing
 
-Set the version in the plugin header and in `readme.txt`, merge, then push a `v*` tag. The release workflow builds the zip from the tag, runs every check against that zip, waits for a maintainer's approval, and attaches it to a GitHub release.
+Set the version in the plugin header and in `readme.txt`, merge, then push a `v*` tag. The release workflow builds the zip from the tag, runs every check against that zip, waits for a maintainer's approval, attaches it to a GitHub release, and publishes it to WordPress.org. Publishing needs the `SVN_PASSWORD` secret in the `release` environment.
 
 ## License
 
