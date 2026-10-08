@@ -5,7 +5,7 @@ Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
 Requires Plugins: woocommerce
-Stable tag: 0.1.2
+Stable tag: 0.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,9 @@ It is stored on your server and used only there. You can instead define `NG_POST
 3. The order note once NIPOST confirms the postcode.
 
 == Changelog ==
+
+= 0.1.3 =
+* Listing tags now include postal code and zip code.
 
 = 0.1.2 =
 * Added screenshots and a link on the author's name.
