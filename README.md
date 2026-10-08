@@ -39,7 +39,7 @@ WordPress 6.7, WooCommerce 10.0, and PHP 7.4, or later. It is tested on PHP 7.4 
 
 ## Install
 
-Download the zip from [Releases](https://github.com/Adeniyikayodee/ng-postcode-woocommerce/releases), then in WordPress go to **Plugins**, **Add New Plugin**, **Upload Plugin**. No settings are needed.
+In WordPress go to **Plugins**, **Add New Plugin**, search for "Adeniyikayode Nigerian Postcode", and press **Install Now**. Or download it from [WordPress.org](https://wordpress.org/plugins/adeniyikayode-nigerian-postcode-for-woocommerce/). No settings are needed.
 
 ## Development
 
