@@ -61,6 +61,12 @@ It is stored on your server and used only there. You can instead define `NG_POST
 
 "Find my postcode" refuses locations outside Nigeria without asking NIPOST, allows each visitor at most 5 searches a minute, and allows the store at most 600 an hour.
 
+== Screenshots ==
+
+1. The checkout after "Find my postcode" fills the field.
+2. The settings, under WooCommerce, Settings, General.
+3. The order note once NIPOST confirms the postcode.
+
 == Changelog ==
 
 = 0.1.1 =
