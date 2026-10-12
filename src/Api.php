@@ -12,6 +12,7 @@ use InvalidArgumentException;
 final class Api
 {
     public const BASE_URL = 'https://api.postcode.gov.ng';
+    private const DEPTH = 128;
 
     /**
      * Resolve a postcode. Levels are cumulative from 1 (validity only) to 5.
@@ -123,8 +124,8 @@ final class Api
     private static function data(int $status, string $body)
     {
         // Objects, not arrays: an array cannot tell {} from [].
-        // A leading byte order mark is not part of the JSON.
-        $envelope = json_decode(strncmp($body, "\xEF\xBB\xBF", 3) === 0 ? substr($body, 3) : $body);
+        // A leading byte order mark is dropped, and nesting stops where serde_json's does.
+        $envelope = json_decode(strncmp($body, "\xEF\xBB\xBF", 3) === 0 ? substr($body, 3) : $body, false, self::DEPTH);
         if (json_last_error() !== JSON_ERROR_NONE) {
             return new ApiError($status, ApiError::MALFORMED, 'not JSON: ' . json_last_error_msg());
         }
