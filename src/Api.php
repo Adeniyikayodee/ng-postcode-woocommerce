@@ -32,12 +32,18 @@ final class Api
      * says otherwise. The API clamps it to 250 m.
      *
      * @return array{path: string, query: list<array{0: string, 1: string}>}
-     * @throws InvalidArgumentException for a coordinate or distance that is not finite
+     * @throws InvalidArgumentException for a coordinate or distance that is not finite or is out of range
      */
     public static function reverse(float $lat, float $lng, ?float $maxDistanceM = null): array
     {
+        if (abs($lat) > 90 || abs($lng) > 180) {
+            throw new InvalidArgumentException('coordinate out of range');
+        }
         $query = [['lat', self::numberText($lat)], ['lng', self::numberText($lng)]];
         if ($maxDistanceM !== null) {
+            if ($maxDistanceM < 0) {
+                throw new InvalidArgumentException('distance must not be negative');
+            }
             $query[] = ['max_distance_m', self::numberText($maxDistanceM)];
         }
         return ['path' => '/v1/search/reverse', 'query' => $query];
