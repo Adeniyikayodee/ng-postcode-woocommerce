@@ -70,6 +70,9 @@ final class ApiSpecTest extends TestCase
         $outcome = !$decoded instanceof ApiError ? 'ok' : ($decoded->code === ApiError::MALFORMED ? 'malformed' : 'rejected');
         self::assertSame($case['outcome'], $outcome);
         self::assertSame($case['code'] ?? null, $outcome === 'rejected' ? $decoded->code : null);
+        if (isset($case['expect']['unit'])) {
+            self::assertSame($case['expect']['unit'], $decoded['unit'] !== null);
+        }
     }
 
     public function testLookupStatuses(): void

@@ -33,7 +33,7 @@ final class ConformanceTest extends TestCase
             ['found' => $result->found, 'char' => $result->char, 'index' => $result->index, 'segment' => $result->segment],
             static fn($value): bool => $value !== null
         );
-        return ['error' => ['kind' => $result->kind] + $fields];
+        return ['error' => ['kind' => $result->kind] + $fields + ['message' => (string) $result]];
     }
 
     private static function expected(array $case): array
