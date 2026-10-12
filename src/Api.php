@@ -100,6 +100,7 @@ final class Api
             return new ApiError($status, ApiError::MALFORMED, 'unexpected data');
         }
         $unit = self::object($data, 'unit');
+        $code = self::text($unit, 'postcode') ?? '';
         // The API echoes points as [lng, lat].
         $point = $data->coordinate ?? null;
         $lng = is_array($point) && count($point) === 2 ? self::number($point[0]) : null;
@@ -107,8 +108,8 @@ final class Api
         return [
             'found' => $data->found,
             'coordinate' => $lat === null || $lng === null ? null : ['lat' => $lat, 'lng' => $lng],
-            'unit' => $unit === null ? null : [
-                'postcode' => self::text($unit, 'postcode') ?? '',
+            'unit' => $unit === null || $code === '' ? null : [
+                'postcode' => $code,
                 'display' => self::text($unit, 'display') ?? '',
                 'distance_m' => self::number($unit->distance_m ?? null),
             ] + self::texts($unit, ['confidence', 'state_name', 'lga_name', 'locality_name', 'address']),
