@@ -10,6 +10,9 @@
     { "name": "autocomplete_next_line", "request": "autocomplete", "args": {"q": "\u0085"}, "sends": null },
     { "name": "autocomplete_control_character", "request": "autocomplete", "args": {"q": "\u001c"}, "sends": {"path": "/v1/search/autocomplete", "query": [["q", "\u001c"]]} },
     { "name": "autocomplete_blank", "request": "autocomplete", "args": {"q": "  "}, "sends": null },
+    { "name": "autocomplete_at_the_length_limit", "request": "autocomplete", "args": {"q": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}, "sends": {"path": "/v1/search/autocomplete", "query": [["q", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"]]} },
+    { "name": "autocomplete_limit_counts_characters", "request": "autocomplete", "args": {"q": "\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00"}, "sends": {"path": "/v1/search/autocomplete", "query": [["q", "\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00\ud83d\ude00"]]} },
+    { "name": "autocomplete_too_long", "request": "autocomplete", "args": {"q": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}, "sends": null },
     { "name": "reverse", "request": "reverse", "args": {"lat": 7.6211, "lng": 5.2214}, "sends": {"path": "/v1/search/reverse", "query": [["lat", "7.6211"], ["lng", "5.2214"]]} },
     { "name": "reverse_within", "request": "reverse", "args": {"lat": 7.6211, "lng": 5.2214, "metres": 100}, "sends": {"path": "/v1/search/reverse", "query": [["lat", "7.6211"], ["lng", "5.2214"], ["max_distance_m", "100"]]} },
     { "name": "nearby_within", "request": "nearby", "args": {"lat": 7.6211, "lng": 5.2214, "metres": 62.5}, "sends": {"path": "/v1/search/nearby", "query": [["lat", "7.6211"], ["lng", "5.2214"], ["radius", "62.5"]]} },
@@ -18,6 +21,26 @@
     { "name": "reverse_negative_zero", "request": "reverse", "args": {"lat": -0.0, "lng": 5.2214}, "sends": {"path": "/v1/search/reverse", "query": [["lat", "0"], ["lng", "5.2214"]]} },
     { "name": "reverse_nan_latitude", "request": "reverse", "args": {"lat": "nan", "lng": 5.2214}, "sends": null },
     { "name": "nearby_infinite_longitude", "request": "nearby", "args": {"lat": 7.6211, "lng": "inf"}, "sends": null },
-    { "name": "reverse_infinite_distance", "request": "reverse", "args": {"lat": 7.6211, "lng": 5.2214, "metres": "-inf"}, "sends": null }
+    { "name": "reverse_infinite_distance", "request": "reverse", "args": {"lat": 7.6211, "lng": 5.2214, "metres": "-inf"}, "sends": null },
+    { "name": "reverse_at_the_pole_and_the_date_line", "request": "reverse", "args": {"lat": -90, "lng": 180}, "sends": {"path": "/v1/search/reverse", "query": [["lat", "-90"], ["lng", "180"]]} },
+    { "name": "reverse_latitude_too_far_north", "request": "reverse", "args": {"lat": 90.5, "lng": 5.2214}, "sends": null },
+    { "name": "nearby_latitude_too_far_south", "request": "nearby", "args": {"lat": -91, "lng": 5.2214}, "sends": null },
+    { "name": "reverse_longitude_too_far_east", "request": "reverse", "args": {"lat": 7.6211, "lng": 180.5}, "sends": null },
+    { "name": "nearby_longitude_too_far_west", "request": "nearby", "args": {"lat": 7.6211, "lng": -181}, "sends": null },
+    { "name": "nearby_negative_radius", "request": "nearby", "args": {"lat": 7.6211, "lng": 5.2214, "metres": -5}, "sends": null },
+    { "name": "reverse_negative_distance", "request": "reverse", "args": {"lat": 7.6211, "lng": 5.2214, "metres": -0.5}, "sends": null },
+    { "name": "nearby_zero_radius", "request": "nearby", "args": {"lat": 7.6211, "lng": 5.2214, "metres": 0}, "sends": {"path": "/v1/search/nearby", "query": [["lat", "7.6211"], ["lng", "5.2214"], ["radius", "0"]]} }
+  ],
+  "untyped_about": "Arguments of the wrong type, passed exactly as written. A language without static types must refuse each one at run time, so that text which was never validated cannot reach a paid lookup. Rust and Java cannot express them. parsed means the code is first built into a postcode.",
+  "untyped": [
+    { "name": "lookup_code_as_text", "request": "lookup", "args": {"code": "EK01A03FK01", "level": 2} },
+    { "name": "lookup_code_that_is_not_a_postcode", "request": "lookup", "args": {"code": "not a postcode", "level": 2} },
+    { "name": "lookup_level_as_text", "request": "lookup", "parsed": true, "args": {"code": "EK01A03FK01", "level": "2"} },
+    { "name": "lookup_level_as_a_boolean", "request": "lookup", "parsed": true, "args": {"code": "EK01A03FK01", "level": true} },
+    { "name": "lookup_level_with_a_fraction", "request": "lookup", "parsed": true, "args": {"code": "EK01A03FK01", "level": 2.5} },
+    { "name": "autocomplete_number", "request": "autocomplete", "args": {"q": 5} },
+    { "name": "reverse_latitude_as_text", "request": "reverse", "args": {"lat": "7.6211", "lng": 5.2214} },
+    { "name": "reverse_longitude_as_a_boolean", "request": "reverse", "args": {"lat": 7.6211, "lng": true} },
+    { "name": "reverse_distance_as_text", "request": "reverse", "args": {"lat": 7.6211, "lng": 5.2214, "metres": "100"} }
   ]
 }
