@@ -123,7 +123,8 @@ final class Api
     private static function data(int $status, string $body)
     {
         // Objects, not arrays: an array cannot tell {} from [].
-        $envelope = json_decode($body);
+        // A leading byte order mark is not part of the JSON.
+        $envelope = json_decode(strncmp($body, "\xEF\xBB\xBF", 3) === 0 ? substr($body, 3) : $body);
         if (json_last_error() !== JSON_ERROR_NONE) {
             return new ApiError($status, ApiError::MALFORMED, 'not JSON: ' . json_last_error_msg());
         }
