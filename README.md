@@ -1,10 +1,12 @@
-# Adeniyikayode Nigerian Postcode for WooCommerce
+# Nigerian Postcode for WooCommerce
 
 [![CI](https://github.com/Adeniyikayodee/ng-postcode-woocommerce/actions/workflows/ci.yml/badge.svg)](https://github.com/Adeniyikayodee/ng-postcode-woocommerce/actions/workflows/ci.yml)
 
-A WooCommerce plugin for Nigeria's National Digital Alphanumeric Postcode System (NDAPS), the building-level postcode NIPOST launched in October 2026. A postcode has 11 characters in five segments, written `EK-01-A03-FK-01`: state, LGA, district, area, and building unit.
+Nigeria's new digital postcode, right at checkout.
 
-The plugin does not add a field. It teaches WooCommerce's own postcode field about Nigerian codes, so the postcode reaches everything that already reads that field: orders, emails, exports, the REST API, couriers, and shipping zones.
+NIPOST's National Digital Alphanumeric Postcode System (NDAPS), launched in October 2026, gives every building an 11-character code such as `EK-01-A03-FK-01`: state, LGA, district, area, and building unit. This plugin makes WooCommerce understand it.
+
+It works through WooCommerce's own postcode field, so the code reaches everything that already reads it: orders, emails, exports, the REST API, couriers, and shipping zones.
 
 ## What it does
 
@@ -39,7 +41,7 @@ WordPress 6.7, WooCommerce 10.0, and PHP 7.4, or later. It is tested on PHP 7.4 
 
 ## Install
 
-In WordPress go to **Plugins**, **Add New Plugin**, search for "Adeniyikayode Nigerian Postcode", and press **Install Now**. Or download it from [WordPress.org](https://wordpress.org/plugins/adeniyikayode-nigerian-postcode-for-woocommerce/). No settings are needed.
+In WordPress go to **Plugins**, **Add New Plugin**, search for "Nigerian Postcode", and press **Install Now**. Or download it from [WordPress.org](https://wordpress.org/plugins/adeniyikayode-nigerian-postcode-for-woocommerce/). No settings are needed.
 
 ## Development
 
